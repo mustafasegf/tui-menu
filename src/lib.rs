@@ -478,6 +478,10 @@ impl<T> MenuItem<T> {
         }
         Some(last_but_one)
     }
+
+    fn set_name(&mut self, name: impl Into<Cow<'static, str>>) {
+        self.name = name.into();
+    }
 }
 
 /// Widget focos on display/render
