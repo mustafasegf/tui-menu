@@ -15,6 +15,7 @@ pub enum MenuEvent<T> {
 }
 
 /// The state for menu, keep track of runtime info
+#[derive(Debug)]
 pub struct MenuState<T> {
     /// stores the menu tree
     root_item: MenuItem<T>,
@@ -307,6 +308,7 @@ impl<T: Clone> MenuState<T> {
 
 /// MenuItem is the node in menu tree. If children is not
 /// empty, then this item is the group item.
+#[derive(Debug)]
 pub struct MenuItem<T> {
     name: Cow<'static, str>,
     pub data: Option<T>,
