@@ -2,7 +2,7 @@ use std::{borrow::Cow, marker::PhantomData};
 use tui::{
     layout::Rect,
     style::{Color, Style},
-    text::{Span, Spans},
+    text::{Span, Line},
     widgets::{Clear, StatefulWidget, Widget},
 };
 
@@ -603,6 +603,6 @@ impl<T> StatefulWidget for Menu<T> {
                 spans.push(span);
             }
         }
-        buf.set_spans(area.x, area.y, &Spans::from(spans), x_pos as u16);
+        buf.set_line(area.x, area.y, &Line::from(spans), x_pos as u16);
     }
 }
