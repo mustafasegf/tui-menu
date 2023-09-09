@@ -582,7 +582,7 @@ impl<T> StatefulWidget for Menu<T> {
 
     fn render(self, area: Rect, buf: &mut tui::buffer::Buffer, state: &mut Self::State) {
         let mut spans = vec![];
-        let mut x_pos = 0;
+        let mut x_pos = area.x as usize;
         let y_pos = area.y;
 
         for (idx, item) in state.root_item.children.iter().enumerate() {
