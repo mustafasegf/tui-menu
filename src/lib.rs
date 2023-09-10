@@ -1,8 +1,12 @@
-use std::{borrow::Cow, marker::PhantomData};
+use std::{
+    borrow::Cow,
+    marker::PhantomData,
+    ops::{Deref, DerefMut},
+};
 use tui::{
     layout::Rect,
     style::{Color, Style},
-    text::{Span, Line},
+    text::{Line, Span},
     widgets::{Clear, StatefulWidget, Widget},
 };
 
@@ -21,6 +25,20 @@ pub struct MenuState<T> {
     root_item: MenuItem<T>,
     /// stores events generated in one frame
     events: Vec<MenuEvent<T>>,
+}
+
+impl Deref for MenuState<()> {
+    type Target = MenuItem<()>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.root_item
+    }
+}
+
+impl DerefMut for MenuState<()> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.root_item
+    }
 }
 
 impl<T: Clone> MenuState<T> {
