@@ -27,15 +27,15 @@ pub struct MenuState<T> {
     events: Vec<MenuEvent<T>>,
 }
 
-impl Deref for MenuState<()> {
-    type Target = MenuItem<()>;
+impl<T: Clone> Deref for MenuState<T> {
+    type Target = MenuItem<T>;
 
     fn deref(&self) -> &Self::Target {
         &self.root_item
     }
 }
 
-impl DerefMut for MenuState<()> {
+impl<T: Clone> DerefMut for MenuState<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.root_item
     }
