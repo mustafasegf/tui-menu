@@ -294,6 +294,10 @@ impl<T: Clone> MenuState<T> {
         self.root_item.highlight_child_mut().unwrap().clear_highlight_non_recursive();
     }
 
+    pub fn is_open(&self) -> bool {
+        self.root_item.highlight_child().is_some()
+    }
+
     /// dive into sub menu if applicable.
     /// Return: Some if entered deeper level
     ///         None if nothing happen
