@@ -27,7 +27,7 @@ pub struct MenuState<T> {
     events: Vec<MenuEvent<T>>,
 }
 
-impl<T: Clone> Deref for MenuState<T> {
+impl<T> Deref for MenuState<T> {
     type Target = MenuItem<T>;
 
     fn deref(&self) -> &Self::Target {
@@ -35,7 +35,7 @@ impl<T: Clone> Deref for MenuState<T> {
     }
 }
 
-impl<T: Clone> DerefMut for MenuState<T> {
+impl<T> DerefMut for MenuState<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.root_item
     }
@@ -289,6 +289,11 @@ impl<T: Clone> MenuState<T> {
         }
     }
 
+    pub fn close(&mut self) {
+        // self.root_item.children[0].clear_highlight_non_recursive();
+        self.root_item.highlight_child_mut().unwrap().clear_highlight_non_recursive();
+    }
+
     /// dive into sub menu if applicable.
     /// Return: Some if entered deeper level
     ///         None if nothing happen
@@ -450,6 +455,10 @@ impl<T> MenuItem<T> {
         }
     }
 
+    fn clear_highlight_non_recursive(&mut self) {
+        self.is_highlight = false;
+    }
+
     /// return deepest highlight item's reference
     pub fn highlight(&self) -> Option<&Self> {
         if !self.is_highlight {
@@ -499,6 +508,20 @@ impl<T> MenuItem<T> {
 
     pub fn set_name(&mut self, name: impl Into<Cow<'static, str>>) {
         self.name = name.into();
+    }
+
+    pub fn set_child_name(&mut self, index: usize, name: impl Into<Cow<'static, str>>) {
+        if let Some(child) = self.children.get_mut(index) {
+            child.set_name(name);
+        }
+    }
+    
+    pub fn children(&self) -> &[Self] {
+        &self.children
+    }
+
+    pub fn children_mut(&mut self) -> &mut [Self] {
+        &mut self.children
     }
 }
 
